@@ -21,10 +21,10 @@ if [ -n "$GIT_SYNC_PRIVATE_KEY" ]; then
     echo "$GIT_SYNC_PRIVATE_KEY" > "$privateKeyFile"
 fi
 
-if [ -f "$privateKeyFile" ]; then
-    chmod 400 "$privateKeyFile"
-    chown $(id -u):$(id -g) "$privateKeyFile"
-fi
+#if [ -f "$privateKeyFile" ]; then
+#    chmod 400 "$privateKeyFile"
+#    chown $(id -u):$(id -g) "$privateKeyFile"
+#fi
 
 if [ -z "$GIT_SYNC_REPO" ]; then
     echo "You must supply repository url through environment: GIT_SYNC_REPO"
@@ -86,7 +86,6 @@ else
 	echo "fresh folder, clean and clone"
     find "$groot" -mindepth 1 -delete
     eval "$gitcmd"
-    ModChanges
 fi
 
 cd $groot
@@ -94,6 +93,7 @@ ModChanges
 
 while true
 do
+	git checkout "$gbranch"
     git pull
     ModChanges
     sleep $gwait
